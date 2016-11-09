@@ -1,0 +1,361 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Accident DMS</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+ 
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="plugins/timepicker/bootstrap-timepicker.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+  <script src="js/jquery.js"></script>
+  <script>
+    var login = window.localStorage.getItem('login');         
+    if(login !== '1'){
+      window.location = 'login.html';
+    }
+  </script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+  <header class="main-header">    
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+     </nav>
+  </header>
+
+  <!-- =============================================== -->
+
+  <!-- Left side column. contains the sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="NewAccident.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+        </li>
+        <li class="active">
+          <a href="NewAccident.html"><i class="glyphicon glyphicon-file"></i> File New Accident</a>
+        </li>
+        <li>
+          <a href="NewAccident.html"><i class="glyphicon glyphicon-edit"></i> Edit Stored Accident</a>
+        </li>                    
+        <li>
+          <a href="NewAccident.html"><i class="glyphicon glyphicon-open-file"></i> View Stored Accident</a>
+        </li>
+        <li>
+          <a href="NewAccident.html"><i class="glyphicon glyphicon-user"></i> Profile</a>
+        </li>
+        <li>
+          <a href="login.html"onclick="localStorage.removeItem('UserName');"><i class="glyphicon glyphicon-off"></i> Logout</a>
+        </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- =============================================== -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <small><strong>Location and Time</strong></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li>
+          <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Home</a>
+        </li>
+        <li class="active">
+          <i class="glyphicon glyphicon-map-marker"></i> Location and Time
+        </li>
+      </ol>
+    </section>
+    <section class="content">      
+    <div class="box">        
+      <div class="box-body">
+        <form name="newAccidentForm"
+          id="newAccidentForm" 
+          action="post">
+          <div class="form-group">
+            <label>Accident ID</label>
+            <input class="form-control"
+                id="AccidentID"
+                name="AccidentID"
+                placeholder="Accident id."
+                readonly>
+          </div> 
+          <div class="form-group">
+              <label>Area Name</label>
+              <input class="form-control"               
+                name="areaName"
+                id="areaName"
+                placeholder="Area Name">
+          </div>
+          <div class="form-group" >
+            <label>Accident County</label>
+           <input list="countiesList" 
+                  name="county"   
+                  id="county"
+                  class="form-control"
+                  placeholder='Enter the county where the accident occured'>
+            <datalist id="countiesList">
+
+            </datalist>
+          </div>
+
+          <div class="form-group">
+            <label>Date of Accident:</label>
+            <div class="input-group">                  
+              <input type="text"
+                    class="form-control"
+                    name="dateOfAccident"
+                    id="dateOfAccident"                    
+                    data-inputmask="'alias': 'dd/mm/yyyy'" 
+                    placeholder='dd/mm/yyyy'
+                    data-mask>
+              <div class="input-group-addon">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </div>
+            </div>               
+          </div> 
+
+          <div class="bootstrap-timepicker">
+            <div class="form-group">
+              <label>Time of Accident:</label>
+              <div class="input-group">
+                <input type="text"
+                  name="timeOfAccident"
+                  id="timeOfAccident"                 
+                  class="form-control timepicker">
+                <div class="input-group-addon">
+                  <i class="glyphicon glyphicon-time"></i>
+                </div>
+              </div>
+              <!-- /.input group -->
+            </div>
+            <!-- /.form group -->
+          </div> 
+         <b class="active"> 
+            <a href="AccidentDetails.html" 
+               style='float:right'
+               id="nextAccidentDetails"> 
+              <i class="glyphicon glyphicon-forward"></i>
+            </a>
+          </b>
+       </form>
+      </div>
+    </div>
+  </section>
+    
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="jqueryui/jquery-ui.min.js"></script>  
+  </div>
+  <!-- /.content-wrapper -->
+
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+      </div>
+      <strong>Copyright &copy; 2016 <a href="index.html">Kenya Traffic Police</a>.</strong> 
+      All rights reserved.
+    </footer>
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery 2.2.3 -->
+  <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+  <!-- Bootstrap 3.3.6 -->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <!-- SlimScroll -->
+  <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick -->
+  <script src="plugins/fastclick/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/app.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="dist/js/demo.js"></script>
+  <!-- jQuery 2.2.3 -->
+  <!-- Bootstrap 3.3.6 -->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <!-- Select2 -->
+  <script src="plugins/select2/select2.full.min.js"></script>
+  <!-- InputMask -->
+  <script src="plugins/input-mask/jquery.inputmask.js"></script>
+  <script src="plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+  <script src="plugins/input-mask/jquery.inputmask.extensions.js"></script>
+  <!-- date-range-picker -->
+  <script src="js/moment.min.js"></script>
+  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- bootstrap datepicker -->
+  <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+  <!-- bootstrap color picker -->
+  <script src="plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+  <!-- bootstrap time picker -->
+  <script src="plugins/timepicker/bootstrap-timepicker.min.js"></script>
+  <!-- SlimScroll 1.3.0 -->
+  <!-- iCheck 1.0.1 -->
+  <script src="plugins/iCheck/icheck.min.js"></script>
+  <script src="js/default.js"></script>
+  
+  <!-- Page script -->
+  <script>
+       var rqst = $.ajax({
+           url:'PoliceServer/route.php',
+           data: {REQUEST_TYPE:'GET_ALL_GENERAL'},
+           type:'post',
+           datatype:'json'                
+       });
+       rqst.done(function(srvResponse){
+           var responseObj = $.parseJSON(srvResponse);
+           var options = '<option selected disabled>Select County</option>';
+           for(var i = 0; i < responseObj.length; i++)
+           {
+               var countyName =responseObj[i]['CountyName'];
+               options += '<option value="'+countyName+'">'+countyName+'</option>';
+           }
+           $('#countiesList').html(options);
+       });
+  </script>
+
+  <!--Get Accident ID-->
+  <script>
+    var userData = JSON.parse(window.localStorage.getItem('userData'));
+    var data = {
+      REQUEST_TYPE:'GET_ACCIDENT_ID',
+      UserName: window.localStorage.getItem('UserName')
+    };
+    var rqst = $.ajax({
+           url:'PoliceServer/route.php',
+           data: data,
+           type:'post',
+           datatype:'json'                
+       });
+    rqst.done(function(srvResponse){
+           var responseObj = $.parseJSON(srvResponse);
+           if(responseObj['STATUS'] === '1'){
+            setTimeout(function(){
+                $('#AccidentID').val(responseObj['ACCIDENT_ID']);
+                window.localStorage.setItem('AccidentID', responseObj['ACCIDENT_ID']);
+              },0);
+           }
+       });
+  </script>
+  
+  <!--Auto populate New Accident Form-->
+  <script>
+    var srvRqst = $.ajax({
+      url:'PoliceServer/route.php',
+      data:{
+          REQUEST_TYPE:'GET_ACCIDENT_FORM_DATA',
+          UserName: window.localStorage.getItem('UserName'),
+
+          formType: 'NEW_ACCIDENT_FORM',
+          accidentID: window.localStorage.getItem('AccidentID'),
+        },
+      type:'post',
+      datatype:'json'
+    });
+    srvRqst.done(function(responseMsg){
+       var responseObj = $.parseJSON(responseMsg);
+       if(responseObj['STATUS'] === '1'){
+         var formData = responseObj['DATA']['data'];         
+         setTimeout(function(){
+            $('#AccidentID').val(formData['data']['AccidentID']);       
+            $('#county').val(formData['data']['county']);
+            $('#areaName').val(formData['data']['areaName']);            
+            $('#dateOfAccident').val(formData['data']['dateOfAccident']);
+            $('#timeOfAccident').val(formData['data']['timeOfAccident']);           
+         }, 0);
+           
+         
+       } 
+     });
+  </script>
+
+  <script>
+    $(function () {
+      //Initialize Select2 Elements
+      $(".select2").select2();
+
+      //Datemask dd/mm/yyyy
+      $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+       $("[data-mask]").inputmask();
+
+
+      //Date picker
+      $('#datepicker').datepicker({
+        autoclose: true
+      });
+//Timepicker
+      $(".timepicker").timepicker({
+        showInputs: false
+      });
+    });
+  </script>
+  
+  <!-- Send New Accident Details for temporary storage -->
+  <script>
+    $(document).on('click', '#nextAccidentDetails', function(e){
+      e.preventDefault();
+      var AccidentID = window.localStorage.getItem('AccidentID');
+      var areaName = $('#areaName').val();
+      var county = $('#county').val();
+      var dateOfAccident = $('#dateOfAccident').val();
+      var timeOfAccident = $('#timeOfAccident').val();
+
+      var data = {
+        REQUEST_TYPE:'NEW_ACCIDENT_FORM',
+        UserName: window.localStorage.getItem('UserName'),
+        AccidentID:AccidentID,
+        areaName:areaName,
+        county:county,
+        dateOfAccident:dateOfAccident,
+        timeOfAccident:timeOfAccident      
+      };
+
+      var srvRqst = $.ajax({
+        url:'PoliceServer/route.php',
+        data:data,
+        type:'post',
+        datatype:'json'
+      });
+
+      srvRqst.done(function(srvResponse){
+        var responseMsg = $.parseJSON(srvResponse);  
+        if(responseMsg['STATUS'] === '1'){
+          window.location = 'AccidentDetails.html'; 
+        }        
+      });
+    });
+  </script>
+</body>
+</html>

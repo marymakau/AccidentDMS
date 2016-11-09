@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Accident DMS</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <!-- Ionicons -->
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="jqueryui/jquery-ui.min.css"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="plugins/iCheck/all.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+ <script src="js/jquery.js"></script>
+  <script>
+    var login = window.localStorage.getItem('login');         
+    if(login !== '1'){
+      window.location = 'login.html';
+    }
+  </script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+  
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+     </nav>
+  </header>
+
+  <!-- =============================================== -->
+
+  <!-- Left side column. contains the sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+     
+      
+      <ul class="sidebar-menu">
+         <li>
+                        <a href="NewAccident.html"><i class="glyphicon glyphicon-home"></i> Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="NewAccident.html"><i class="glyphicon glyphicon-file"></i> File New Accident</a>
+                    </li>
+                    <li>
+                        <a href="NewAccident.html"><i class="glyphicon glyphicon-edit"></i> Edit Stored Accident</a>
+                    </li>
+                    
+                    <li>
+                        <a href="NewAccident.html"><i class="glyphicon glyphicon-open-file"></i> View Stored Accident</a>
+                    </li>
+                    <li>
+                        <a href="NewAccident.html"><i class="glyphicon glyphicon-user"></i> Profile</a>
+                    </li>
+                    <li>
+                    <a href="login.html"onclick="localStorage.removeItem('UserName');"><i class="glyphicon glyphicon-off"></i> Logout</a>
+                    </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- =============================================== -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <small><strong>Vehicles No.1 Details</strong></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li>
+            <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Home</a>
+        </li>
+        <li class="active">
+            <i class="glyphicon icon-cars"></i> Vehicle Details
+        </li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Default box -->
+      <div class="box">        
+        <div class="box-body">
+          <form name="vehicleDetailsForm"
+            id="vehicleDetailsForm"
+            method="post">                  
+            <div class="form-group">
+              <label>Vehicle Registration Number</label>
+               <input type="text"
+                  class="form-control"
+                  id="regNumber"
+                  name="regNumber"
+                  autocomplete="off"
+                  placeholder="Registration number"
+                  list="regNumOpts">   
+               <datalist id="regNumOpts"></datalist>
+               <span class="text-danger" id="regNumberResponse"></span>
+            </div> 
+              <div class="form-group">
+                  <label>Vehicle registered to</label>
+                  <input class="form-control"
+                         type='text'
+                         name="ownerName"
+                         id="ownerName"
+                         value=''
+                         placeholder="Vehicle Owner" readonly>
+              </div>
+
+              <div class="form-group">
+                  <label>Vehicle Make</label>
+                  <input class="form-control"
+                         type='text'
+                         name="vehicleMake"
+                         id="vehicleMake"
+                         value=''
+                         placeholder="Vehicle Make" readonly>
+              </div>
+              <div class="form-group"> 
+              <label>Vehicle Model</label>
+               <input type="text"
+                  class="form-control"
+                  id="vehicleModel"
+                  name="vehicleModel"
+                  placeholder="Automatically filled "
+                  readonly>             
+                <span class="text-danger" id="vehicleModelResponse"></span>
+            </div>
+            <div class="form-group"> 
+              <label>Current vehicle road-worth status</label>
+               <input type="text"
+                  class="form-control"
+                  id="RoadWorth"
+                  name="RoadWorth"
+                  placeholder="Automatically filled "
+                  readonly>             
+                <span class="text-danger" id="RoadWorthResponse"></span>
+            </div>
+
+            <div class="form-group">
+              <label>Vehicle Type</label>
+              <select class="form-control select2"
+                id="vehicleType"
+                name="vehicleType"                
+                data-placeholder="" 
+                style="width: 100%;">
+                <option selected disabled value =''>Select an option</option>
+                <option>Matatu</option>
+                <option>Passenger Bus</option>
+                <option>Institution Bus</option>
+                <option>Personal/Private Car</option>
+                <option>Taxi/Cab</option>
+                <option>Tourist Van</option>
+                <option>Lorry</option>
+                <option>Trailer</option>
+                <option>Petroleum Tanker</option>
+                <option>Other Tanker</option>
+                <option>Tractor</option>
+              </select>
+            </div>
+          
+            <div class="form-group">
+              <label>Vehicle Load Size</label>
+              <select class="form-control select2"
+                name="vehicleLoadSize" 
+                id="vehicleLoadSize" 
+                style="width: 100%;">
+                <option selected disabled value =''>Select an option</option>
+                <option>Normal Load</option>
+                <option>Over-loaded/excessively Loaded</option>                 
+              </select>
+            </div> 
+            
+            <div class="form-group">
+              <label>Vehicle Defects </label><br><br>
+              <label>
+                <input type="checkbox" 
+                    class="flat-red" 
+                    name="vehicleDefects"                    
+                    value="Defective Lights">
+                Defective Lights
+              </label>
+              <br>   
+
+              <label>
+                <input type="checkbox" class="flat-red" name="vehicleDefects" value="Bad Tire(s)">
+                Bad Tire(s)
+              </label>
+              <br>
+
+              <label>
+                <input type="checkbox"  class="flat-red" name="vehicleDefects" value="No/Bad side Mirror(s)">
+                 No/Bad side Mirror(s)
+               </label>
+              <br>
+              <label>
+                <input type="checkbox"  class="flat-red" name="vehicleDefects" value="No/defective braking system">
+                 No/defective braking system
+              </label>
+              <br>
+              <label>
+                <input type="checkbox"  class="flat-red" name="vehicleDefects" value="General Road Unworth">
+                General Road Unworth
+              </label>
+              <br>
+              <label>
+                <input type="checkbox"  class="flat-red" name="vehicleDefects" value="Hard to say">
+                Hard to say
+              </label><br>
+               <label>
+                <input type="checkbox"  class="flat-red" name="vehicleDefects" value="None">
+                None
+              </label>
+              <br>
+              <textarea class="form-control" 
+                id="other" 
+                name="other"
+                rows="2" 
+                placeholder="Other Defect(s)" 
+                style='resize: none;'></textarea>
+            </div>  
+              
+              <div class="form-group">
+                  <label>Primary Insuarance Company</label>
+                  <input class="form-control"
+                         type='text'
+                         name="insuarer"
+                         id="insuarer"
+                         placeholder="Insuarance Company eg DirectLine">
+              </div>
+
+              <div class="form-group">
+                  <label>Insuarance Policy Number</label>
+                  <input class="form-control"
+                         type='text'
+                         name='policyNumber'
+                         id="policyNumber"
+                         placeholder="Policy Number">
+              </div>
+
+              <div class="form-group">
+                  <label> Insuarance cover expired? </label>  <br>
+                  <label>
+                      <input type="radio" value="Yes" class="flat-red" name="coverExpired">
+                      Yes
+                  </label>
+                  <br>
+                  <label>
+                      <input type="radio" value="No" class="flat-red" name="coverExpired">
+                      No
+                  </label>
+              </div>
+
+              <div class="form-group">
+                  <label>Other Insuarance Cover</label>
+                  <textarea class="form-control"
+                            rows="3"
+                            name="otherpolicy"
+                            id="otherpolicy"
+                            placeholder="Company,Policy Number,Expiry Status(Yes/No)"
+                            style="resize: none;"></textarea>
+              </div>      
+            <br>
+        <b class="active"> 
+          <a href="VehicleDriverDetails.html" 
+            id="nextVehicleDriverDetails"
+            style='float:right'> 
+            <i class="glyphicon glyphicon-forward"></i>
+          </a>
+        </b>
+        <b class="active"> 
+          <a href="AccidentDetails.html"> 
+            <i class="glyphicon glyphicon-backward"></i>
+          </a>
+        </b> 
+      </form>
+    </div> 
+</div>
+
+    </section>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="jqueryui/jquery-ui.min.js"></script>
+    <script src="js/default.js"></script>
+      
+    <script>
+        $(document).on('keyup blur focusout', '#regNumber', function(e){
+            e.preventDefault();
+            GetVehicleDetails();                
+        });
+
+        $(document).on('click', '.ui-autocomplete > .ui-menu-item > .ui-menu-item-wrapper', function(e){
+            e.preventDefault();
+            GetVehicleDetails(); 
+
+        });
+
+        function GetVehicleDetails()
+        {
+            $('#RoadWorth').val('');               
+            $('#vehicleModel').val('');
+            $('#vehicleMake').val('');
+            $('#ownerName').val('');
+            var regNumber = $('#regNumber').val();
+            var data = {
+                REQUEST_TYPE:'GET_VEHICLE_DETAILS',
+                regNumber:regNumber
+            };
+
+            var srvRqst = $.ajax({
+                url:'PoliceServer/route.php',
+                data:data,
+                type:'post',
+                datatype:'json'   
+            });
+
+            srvRqst.done(function(srvResponse)
+            {                   
+                var responseObj = $.parseJSON(srvResponse); 
+                $('#RoadWorth').val(responseObj['RoadWorthStatus']),
+                $('#vehicleModel').val(responseObj['VehicleModel']),
+                $('#vehicleMake').val(responseObj['VehicleMake']),
+                $('#ownerName').val(responseObj['VehicleOwner']);
+            }); 
+        }
+
+        GetAllRegNumbers();
+
+        function GetAllRegNumbers()
+        {
+            var data = {
+                REQUEST_TYPE:'GET_ALL_REG_NUM'
+            };
+
+            var srvRqst = $.ajax({
+                url:'PoliceServer/route.php',
+                data:data,
+                type:'post',
+                datatype:'json'   
+            });
+
+            srvRqst.done(function(srvResponse)
+            {                    
+                var responseObj = $.parseJSON(srvResponse); 
+                var regNums = [];
+                var html = '';
+                for(var i = 0; i< responseObj.length; i++)
+                {
+                    regNums.push(responseObj[i]['VehicleRegNumber']);
+                }
+
+                $('#regNumber').autocomplete({
+                    source:regNums
+                });
+            });
+        }
+    </script>
+   </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+    </div>
+    <strong>Copyright &copy; 2016 <a href="index.html">Kenya Traffic Police</a>.</strong> 
+    All rights reserved.
+  </footer>
+
+   <div class="control-sidebar-bg"></div>
+</div>
+
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="plugins/fastclick/fastclick.js"></script>
+<script src="dist/js/app.min.js"></script>
+<script src="dist/js/demo.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/select2/select2.full.min.js"></script>
+<script src="plugins/iCheck/icheck.min.js"></script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-blue',
+      radioClass: 'iradio_flat-blue'
+    });
+
+  });
+</script>
+
+ <!--Auto populate Vehicle Details Form-->
+  <script>
+   var srvRqst = $.ajax({
+      url:'PoliceServer/route.php',
+      data:{
+          REQUEST_TYPE:'GET_ACCIDENT_FORM_DATA',
+          UserName: window.localStorage.getItem('UserName'),
+
+          formType: 'VEHICLE_DETAILS_FORM',
+          accidentID: window.localStorage.getItem('AccidentID'),
+        },
+      type:'post',
+      datatype:'json'
+    });    srvRqst.done(function(responseMsg){
+       var responseObj = $.parseJSON(responseMsg);
+       if(responseObj['STATUS'] === '1'){
+           var formData = responseObj['DATA']['data'];
+            setTimeout(function(){
+            $('#regNumber').val(formData['data']['regNumber']);       
+            $('#RoadWorth').val(formData['data']['roadWorth']);
+            $('#vehicleType').val(formData['data']['vehicleType']);            
+            $('#vehicleLoadSize').val(formData['data']['vehicleLoadSize']);
+            $('#vehicleDefects').val(formData['data']['vehicleDefects']);
+            $('#other').val(formData['data']['other']);
+            $('#ownerName').val(formData['data']['ownerName']);
+            $('#vehicleMake').val(formData['data']['vehicleMake']);
+            $('#vehicleModel').val(formData['data']['vehicleModel']);
+            $('#insuarer').val(formData['data']['insuarer']);
+            $('#policyNumber').val(formData['data']['policyNumber']);
+            $('#coverExpired').val(formData['data']['coverExpired']);
+            $('#otherpolicy').val(formData['data']['otherpolicy']);
+            
+         }, 0);
+              
+       } 
+     });
+  </script>
+
+    <script>
+      $(document).on('click', '#nextVehicleDriverDetails', function(e){
+        e.preventDefault();
+        var regNumber = $('#regNumber').val();
+        var roadWorth = $('#RoadWorth').val();
+        var vehicleType = $('#vehicleType').val();
+        var vehicleLoadSize = $('#vehicleLoadSize').val();    
+        var vehicleDefects = [];
+        $("input[name='vehicleDefects']:checked").each(function() {
+          vehicleDefects.push(this.value);
+        });
+        $('#vehicleDefects').val();    
+        var other = $('#other').val();
+        var ownerName = $('#ownerName').val();
+        var vehicleMake = $('#vehicleMake').val();
+        var insuarer = $('#insuarer').val();
+        var policyNumber = $('#policyNumber').val();
+        var vehicleModel = $('#vehicleModel').val();
+
+        var coverExpired = null;
+        if ($('input[name=coverExpired][value=Yes]').is(':checked')) {
+            coverExpired = 'Yes';
+        }
+        else {
+            coverExpired = 'No';
+        }
+        var otherpolicy = $('#otherpolicy').val();
+    
+        var data = {
+          REQUEST_TYPE:'VEHICLE_DETAILS_FORM',
+          UserName: window.localStorage.getItem('UserName'),
+          AccidentID: window.localStorage.getItem('AccidentID'),
+          regNumber: regNumber,
+          roadWorth: roadWorth,
+          vehicleType: vehicleType,
+          vehicleLoadSize: vehicleLoadSize,
+          vehicleDefects: vehicleDefects,
+          other: other,
+          ownerName: ownerName,
+          vehicleMake: vehicleMake,
+          vehicleModel: vehicleModel,
+          insuarer: insuarer,
+          policyNumber: policyNumber,
+          coverExpired: coverExpired,
+          otherpolicy: otherpolicy
+        };
+
+        var srvRqst = $.ajax({
+          url:'PoliceServer/route.php',
+          data:data,
+          type:'post',
+          datatype:'json'
+        });
+   
+        srvRqst.done(function(srvResponse){
+          var responseMsg = $.parseJSON(srvResponse);  
+          if(responseMsg['STATUS'] === '1'){
+              window.localStorage.setItem('VehicleRegNumber', regNumber);
+            window.location = 'VehicleDriverDetails.html';
+          }        
+        });    
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Accident DMS</title> 
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">  
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">  
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">  
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">  
+  <link rel="stylesheet" href="plugins/iCheck/all.css"> 
+  <link rel="stylesheet" href="plugins/select2/select2.min.css">
+ <script src="js/jquery.js"></script>
+  <script>
+    var login = window.localStorage.getItem('login');         
+    if(login !== '1'){
+      window.location = 'login.html';
+    }
+  </script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<!-- Site wrapper -->
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+  
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+
+     </nav>
+  </header>
+
+  <!-- =============================================== -->
+
+  <!-- Left side column. contains the sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      
+      
+      <ul class="sidebar-menu">
+         <li>
+                    <a href="NewAccident.html"><i class="fa fa-fw fa-home"></i> Home</a>
+                    </li>
+                    <li class="active">
+                        <a href="NewAccident.html"><i class="fa fa-fw fa-file-o"></i> File New Accident</a>
+                    </li>
+                    <li>
+                        <a href="NewAccident.html"><i class="fa fa-fw fa-edit"></i> Edit Stored Accident</a>
+                    </li>
+                    
+                    <li>
+                        <a href="NewAccident.html"><i class="fa fa-fw fa-archive"></i> View Stored Accident</a>
+                    </li>
+                    <li>
+                        <a href="NewAccident.html"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    </li>
+                    <li>
+                    <a href="login.html"onclick="localStorage.removeItem('UserName');"><i class="glyphicon glyphicon-off"></i> Logout</a>
+                    </li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- =============================================== -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <small><strong>Accident Details</strong></small>
+      </h1>
+       <ol class="breadcrumb">
+      <li>
+          <i class="glyphicon glyphicon-home"></i>  <a href="index.html">Home</a>
+      </li>
+      <li class="active">
+          <i class="glyphicon glyphicon-exclamation-sign"></i> Accident Details
+      </li>
+  </ol>
+</section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        
+        <div class="box-body">
+
+        <form name="accidentDetailsForm"
+            id="accidentDetailsForm"
+            method="post">                 
+          
+          <div class="form-group">
+            <label>Number of vehicles involved</label>
+            <input type='number' 
+              class="form-control"
+              name='vehicleNumber' 
+              id="vehicleNumber"
+              placeholder="Number of vehicles involved in the accident">
+          </div> 
+               
+          <div class="form-group">
+             <label> Hit and Run?</label>  <br>             
+            <label>
+              <input id="hitAndRun_Yes" type="radio" name="hitAndRun" value="Yes">
+              Yes
+            </label>
+            <br>
+            <label>
+              <input id="hitAndRun_No" type="radio" name="hitAndRun" value="No" >
+              No
+            </label>
+          </div>
+                   
+          <div class="form-group">
+            <label>Accident Severity</label>
+            <select class="form-control" id='severity' data-placeholder="" style="width: 100%;">
+                    
+            </select>
+          </div>
+          
+        <div class="form-group">
+        <label>Weather Conditions(s)</label>
+        <select class="form-conweatherConditionstrol select2"
+            id="weatherConditions"
+            name="weatherConditions"
+            multiple="multiple" 
+            data-placeholder="weather conditon(s)"
+            style="width: 100%;">
+        <option>Normal</option>
+        <option>Foggy</option>
+        <option>Rainy</option>
+        <option>Misty</option>
+        <option>Snowing</option>
+        <option>Drizzling</option>
+        </select>
+        </div>
+
+          <div class="form-group">
+            <label>Lighting/Illumination</label>
+            <select class="form-control select2"
+                    data-placeholder="" 
+                    style="width: 100%;"
+                    id="illumination"
+                    name="illumination">
+              <option selected disabled value =''>Select a road lighting conditions</option>
+              <option>DayLight</option>
+              <option>Night/dark</option>
+              <option>Poorly Lit</option>
+              <option>Well Lit</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Road Signs nearby(Max 200M away)</label>
+            <input class="form-control" 
+                name="roadSignsNearby" 
+                id="roadSignsNearby"
+                placeholder="Enter Nearby road signs">
+          </div>
+              
+          <div class="form-group">
+            <label>Other Accident description</label>
+            <textarea class="form-control"
+              rows="6" 
+              placeholder="Enter other accident details/decriptions"
+              name="accidentDescription"
+              id="accidentDescription"
+              style='resize: none;'></textarea>
+          </div>
+                                                 
+          <br>
+          <b class="active"> 
+            <a href="VehicleDetails.html"
+               id="nextVehicleDetails"               
+               style='float:right'> 
+              <i class="glyphicon glyphicon-forward"></i></a>
+          </b>
+          <b class="active"> 
+              <a href="NewAccident.html"> 
+                <i class="glyphicon glyphicon-backward"></i>
+              </a>
+          </b> 
+      </form>
+    </div> 
+</div>
+
+    </section>
+  </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+    </div>
+    <strong>Copyright &copy; 2016 <a href="index.html">Kenya Traffic Police</a>.</strong> 
+    All rights reserved.
+  </footer>
+
+   <div class="control-sidebar-bg"></div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="jqueryui/jquery-ui.min.js"></script>
+<script src="js/default.js"></script>  
+<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="plugins/fastclick/fastclick.js"></script>
+<script src="dist/js/app.min.js"></script>
+<script src="dist/js/demo.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/select2/select2.full.min.js"></script>
+<script src="plugins/iCheck/icheck.min.js"></script>
+
+
+<script>
+    var rqst = $.ajax({
+        url:'PoliceServer/route.php',
+        data: {REQUEST_TYPE:'GET_ALL_GENERAL'},
+        type:'post',
+        datatype:'json'
+    });
+
+    rqst.done(function (srvResponse) {
+        setTimeout(function(){
+            var responseObj = $.parseJSON(srvResponse);
+            var options = '<option selected disabled>Select severity</option>';
+            for(var i = 0; i < responseObj.length; i++)
+            {
+                if (responseObj[i]['severe'].length === 0)
+                {
+                    continue;
+                }
+                var severe =responseObj[i]['severe'];
+                options += '<option value="'+severe+'">'+severe+'</option>';
+            }
+            $('#severity').html(options);
+        }, 1);
+    });
+</script>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+        //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_flat-blue'
+    });
+    });
+</script>
+
+ <!--Auto populate Accident Details Form-->
+  <script>
+   var srvRqst = $.ajax({
+      url:'PoliceServer/route.php',
+      data:{
+          REQUEST_TYPE:'GET_ACCIDENT_FORM_DATA',
+          UserName: window.localStorage.getItem('UserName'),
+
+          formType: 'ACCIDENT_DETAILS_FORM',
+          accidentID: window.localStorage.getItem('AccidentID'),
+        },
+      type:'post',
+      datatype:'json'
+    });    srvRqst.done(function(responseMsg){
+       var responseObj = $.parseJSON(responseMsg);
+       if(responseObj['STATUS'] === '1'){
+         var formData = responseObj['DATA']['data'];
+         setTimeout(function () {
+
+            $("input[name=hitAndRun][value=" + formData['data']['hitAndRun'] + "]").prop("checked", true);
+            $('#vehicleNumber').val(formData['data']['vehicleNumber']);
+
+            $('#severity').val(formData['data']['severity']);
+
+            $('#weatherConditions').val(formData['data']['weatherConditions']);
+            $('#illumination').val(formData['data']['illumination']);
+            $('#roadSignsNearby').val(formData['data']['roadSignsNearby']);
+            $('#accidentDescription').val(formData['data']['accidentDescription']);
+
+         }, 0);
+              
+       } 
+     });
+  </script>
+<script>
+  $(document).on('click', '#nextVehicleDetails', function(e){
+    
+    e.preventDefault();
+    var vehicleNumber = $('#vehicleNumber').val();
+    var hitAndRun = null;
+    
+    if($('input[name=hitAndRun][value=Yes]').is(':checked'))
+    {
+      hitAndRun = 'Yes';
+    }
+    else{
+      hitAndRun = 'No';
+    }
+    var severity = $('#severity').val();
+    var weatherConditions = $('#weatherConditions').val();
+    var illumination = $('#illumination').val();
+    var roadSignsNearby = $('#roadSignsNearby').val();
+    var accidentDescription = $('#accidentDescription').val();
+    
+    var data = {
+      REQUEST_TYPE:'ACCIDENT_DETAILS_FORM',
+      UserName: window.localStorage.getItem('UserName'),
+      AccidentID: window.localStorage.getItem('AccidentID'),
+      hitAndRun: hitAndRun,
+      vehicleNumber:vehicleNumber,
+      severity: severity,
+      weatherConditions: weatherConditions,
+      illumination:illumination,
+      roadSignsNearby: roadSignsNearby,
+      accidentDescription:accidentDescription      
+    };
+    
+    var srvRqst = $.ajax({
+      url:'PoliceServer/route.php',
+      data:data,
+      type:'post',
+      datatype:'json'
+    });
+   
+    srvRqst.done(function(srvResponse){
+      var responseMsg = $.parseJSON(srvResponse);  
+      if (responseMsg['STATUS'] === '1') {
+        window.localStorage.setItem('vehicleNumber',vehicleNumber);
+        window.location = 'VehicleDetails.html'; 
+      }        
+    });
+  });
+</script>
+</body>
+</html>
