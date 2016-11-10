@@ -1,0 +1,186 @@
+<html>
+  <head>
+    <title>Accidents</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+  <body>
+    <div id="map" style="width:100%;height:100%">
+      
+    </div>    
+    
+    <script src="js/jquery.js"></script>
+    <script>
+      var map;
+      var markersArray = [];      
+
+
+      function myMap(){       
+        var mapCanvas = document.getElementById("map");
+        var mapOptions = {
+          center: new google.maps.LatLng(-1.28333, 36.81667),
+          zoom: 7,
+        };
+        
+        google.maps.Map.prototype.clearOverlays = function() {
+          for (var i = 0; i < markersArray.length; i++ )
+          {
+            markersArray[i].setMap(null);
+          }
+          markersArray.length = 0;
+        }; 
+
+        map = new google.maps.Map(mapCanvas, mapOptions);        
+                
+        var srvRqst = $.ajax({
+          url:'server/maps.php',
+          data:{REQUEST_TYPE:'GET_ACCIDENT_CORDINATES'},
+          type:'post',
+          datatype:'json'
+        });
+          
+        srvRqst.done(function(response){
+
+          var responseMsg = $.parseJSON(response); 
+          if(responseMsg['STATUS'] === '1')
+          {            
+            var accidentData = responseMsg['ACCIDENT_DATA'];
+            for( var i = 0; i< accidentData.length; i++){
+
+              var position = {
+                lat:parseFloat(accidentData[i]['LocationLat']),
+                lng:parseFloat(accidentData[i]['LocationLong'])     
+              };
+
+              var marker = new google.maps.Marker({
+                position: position,
+                map: map
+              });
+
+              marker.accidentID =accidentData[i]['AccidentID'];
+              marker.accidentCounty =accidentData[i]['LocationCounty'];
+              marker.accidentLocation =accidentData[i]['LocationCommonName'];
+              marker.accidentDate =accidentData[i]['AccidentDate'];
+              marker.accidentCauses =accidentData[i]['AccidentCauses'].substring(0, accidentData[i]['AccidentCauses'].indexOf('|'));
+              marker.severity =accidentData[i]['Severity'];
+
+              markersArray.push(marker);
+
+              var infowindow = new google.maps.InfoWindow();
+
+              google.maps.event.addListener(marker, 'click', function () {
+                  infowindow.setOptions({
+                      content: '<div id="content">'+
+            '<div id="siteNotice">'+
+            '</div>'+
+            '<h4 id="firstHeading" class="firstHeading">Accident Location,Time and General Information</h4>'+
+            '<div id="bodyContent">'+
+            '<b>'+'County:'+'</b>'+this.accidentCounty+'<br>'+
+            '<b>'+'Location:'+'</b>'+this.accidentLocation+'<br>'+
+            '<b>'+'Date & Time:'+'</b>'+this.accidentDate+'<br>'+
+            '<b>'+'Causes:'+'</b>'+this.accidentCauses+'<br>'+
+             '<b>'+'Severity:'+'</b>'+this.severity+'<br>'+
+
+            '</div>'+
+            '</div>'
+                  });
+                  infowindow.open(map, this);
+              });    
+            }
+          }  
+        });
+
+       
+        
+        $('#map').append('<input type="text"'
+          +'id="search"'
+          +'name="search"'
+          +'placeholder="Search"'
+          +'list="locationList"'
+          +'autocomplete="off"'
+          +'style="float:right;'
+          +'position: static;'            
+          +'position: relative;'
+          +'color: rgb(86, 86, 86);'
+          +'font-family: Roboto,Arial,sans-serif;'
+          +'-moz-user-select: none;'
+          +'font-size:15px;'
+          +'background-color:rgb(255, 255, 255);'
+          +'padding:8px;'
+          +'background-clip: padding-box;' 
+          +'background:#FFFFFF;'
+          +'box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);' 
+          +'border-left: 0px none;'
+          +'min-width: 42px;">'
+          +'<datalist id="locationList"></datalist>');
+  
+          var srvRqst = $.ajax({
+          url:'server/maps.php',
+          data:{REQUEST_TYPE:'GET_LOCATIONS'},
+          type:'post',
+          datatype:'json'
+        });
+        srvRqst.done(function(response){
+          var responseObj = $.parseJSON(response);
+          if(responseObj['STATUS'] === '1'){            
+            var locations = responseObj['LOCATIONS'];
+            var opts= '';
+            for(var i = 0; i < locations.length; i++){
+              opts += '<option>'+locations[i]['location']+'</option>'
+            }   
+            $('#locationList').html(opts);
+          }          
+        });          
+      }
+      
+      $(document).on('keyup blur focusout', '#search', function(e){
+            e.preventDefault();
+            var searchVal = $('#search').val();
+            var srvRqst = $.ajax({
+              url:'server/maps.php',
+              data:{
+                  REQUEST_TYPE:'SEARCH_FOR_ACCIDENT',
+                  searchVal: searchVal
+               },
+              type:'post',
+              datatype:'json'
+            });
+            
+            srvRqst.done(function(response){ 
+             
+              map.clearOverlays();
+              var responseMsg = $.parseJSON(response); 
+              if(responseMsg['STATUS'] === '1'){
+              var accidentData = responseMsg['ACCIDENT_DATA'];
+              for( var i = 0; i< accidentData.length; i++){
+                var position = {
+                  lat:parseFloat(accidentData[i]['LocationLat']),
+                  lng:parseFloat(accidentData[i]['LocationLong'])     
+                };
+                var marker = new google.maps.Marker({
+                  position: position,
+                  map: map
+                });
+
+                marker.accidentID =accidentData[i]['AccidentID'];
+                markersArray.push(marker);
+
+                var infowindow = new google.maps.InfoWindow();
+
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.setOptions({
+                        content: this.accidentID
+                    });
+                    infowindow.open(map, this);
+                });
+          }}              
+        });
+      });
+    </script>
+    <script 
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAiKlp6s7P2vVrpXDebs9-jCFlc5S0yL5A&callback=myMap">
+    </script>
+
+  </body>
+</html>

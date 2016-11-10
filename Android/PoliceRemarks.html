@@ -24,13 +24,18 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
   <header class="main-header">    
-    <nav class="navbar navbar-static-top">     
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+     <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-      </a>
+      </a> <br><div style='color:white;float:right;padding-right:20px'><script>document.write('Police Officer ');document.write(window.localStorage.getItem('LastName'));
+    document.write(' ');document.write(window.localStorage.getItem('FirstName'));</script>
+    </div>
      </nav>
   </header>
   <aside class="main-sidebar">    
@@ -137,19 +142,13 @@
                     style='resize: none;'></textarea>
               </div>
               <br>
-              <b class="active"> 
-                <button 
-                    id="cacheData"
-                    style='position:relative;left:10%;' 
-                    class="btn btn-primary">Cache Data</button>
-              </b>
-              <b class="active"> 
-                <button 
-                    id="saveData"
-                    style='float:right;' 
-                    class="btn btn-primary">Upload Data</button>
-              </b> 
-               
+             <b class="active"> 
+          <a href="save.html" 
+            id="cacheData"
+            style='float:right'> 
+            <i class="glyphicon glyphicon-forward"></i>
+          </a>
+        </b>   
               <b class="active"> 
                 <a href="VehicleDriverDetails.html" 
                    style='float:left'> 
@@ -274,43 +273,10 @@
     srvRqst.done(function(srvResponse){
       var responseMsg = $.parseJSON(srvResponse);  
       if(responseMsg['STATUS'] === '1'){
-        alert('Accident Details Cached.Please Remember to Upload them later');
-        window.location = 'PoliceRemarks.html'; 
+        window.location = 'save.html'; 
       }        
     });     
   });
-</script>
-
-<script>
-  $(document).on('click', '#saveData', function(e){
-    e.preventDefault();
-      var data = {
-      REQUEST_TYPE:'ALL_ACCIDENT_DETAILS',
-
-      UserName: window.localStorage.getItem('UserName'),
-      AccidentID: window.localStorage.getItem('AccidentID'),
-    };
-    
-    var srvRqst = $.ajax({
-        url:'PoliceServer/route.php',
-      data:data,
-      type:'post',
-      datatype:'json'
-    });
-   
-    srvRqst.done(function(srvResponse){
-      var responseMsg = $.parseJSON(srvResponse);  
-      if(responseMsg['STATUS'] === '0'){
-        alert('Fill in the compulsory fields');
-        window.location = 'PoliceRemarks.html';
-      
-      } 
-      else
-        {alert('Accident details have been recorded');
-        window.location = 'NewAccident.html';
-      }       
-    });     
-  }); 
 </script>
 </body>
 </html>
